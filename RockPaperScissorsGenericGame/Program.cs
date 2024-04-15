@@ -13,7 +13,7 @@ internal static class Program
         Console.Write("Enter your move: ");
         var userMove = GetUserMove();
         var matrixService = new MovesMatrix(args.Length);
-        matrixService.PrintMatrix();
+        ConsoleTableGenerator.PrintHelp(args.Length, args, matrixService.Matrix);
     }
 
     private static int GetUserMove()
