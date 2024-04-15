@@ -1,8 +1,8 @@
 ﻿namespace RockPaperScissorsGenericGame;
 
-internal class ConsoleInput
+internal static class ConsoleInput
 {
-    public void CheckInputLength(int inputLength)
+    public static void CheckInputLength(int inputLength)
     {
         if (inputLength == 0)
         {

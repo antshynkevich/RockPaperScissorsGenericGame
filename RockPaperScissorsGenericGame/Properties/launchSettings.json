@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "RockPaperScissorsGenericGame": {
+      "commandName": "Project",
+      "commandLineArgs": "Bomb Tank Rocket \"Fighter Aircraft\" Howitzer Drone \"Anti-Air Missile\""
+    }
+  }
+}
