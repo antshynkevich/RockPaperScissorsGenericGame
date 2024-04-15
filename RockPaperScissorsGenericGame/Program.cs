@@ -5,28 +5,26 @@ internal static class Program
     static void Main(string[] args)
     {
         CheckArguments(args);
-
-        var moves = new List<GameMove>();
-        for (int i = 0; i < args.Length; i++)
-        {
-            moves.Add(new GameMove(args[i], i + 1));
-        }
-
+        var movesService = new GameMoveService(args);
+        // var moves = movesService.GetMoves();
         Console.WriteLine("Available moves:");
-        foreach (var gameMove in moves)
-        {
-            Console.WriteLine(gameMove);
-        }
-
+        movesService.PrintAllMoves();
         Console.WriteLine("0 - exit\r\n? - help\r\n");
+        Console.Write("Enter your move: ");
+        var userMove = GetUserMove();
+    }
+
+    private static int GetUserMove()
+    {
+        int userMove = int.Parse(Console.ReadLine());
+        return userMove;
     }
 
     private static void CheckArguments(string[] args)
     {
-        var input = new ConsoleInput();
         try
         {
-            input.CheckInputLength(args.Length);
+            ConsoleInput.CheckInputLength(args.Length);
         }
         catch (Exception exp)
         {
