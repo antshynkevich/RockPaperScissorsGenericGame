@@ -12,6 +12,8 @@ internal static class Program
         Console.WriteLine("0 - exit\r\n? - help\r\n");
         Console.Write("Enter your move: ");
         var userMove = GetUserMove();
+        var matrixService = new MovesMatrix(args.Length);
+        matrixService.PrintMatrix();
     }
 
     private static int GetUserMove()
