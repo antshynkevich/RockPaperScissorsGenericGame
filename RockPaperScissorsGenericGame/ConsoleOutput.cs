@@ -2,9 +2,9 @@
 
 namespace RockPaperScissorsGenericGame;
 
-internal static class ConsoleTableGenerator
+internal static class ConsoleOutput
 {
-    public static void PrintHelp(int len, string[] args, int[,] matrix) 
+    public static void PrintHelp(int len, string[] args, int[,] matrix)
     {
         var firstRaw = new string[len + 1];
         firstRaw[0] = "PC v | User ->";
@@ -35,5 +35,19 @@ internal static class ConsoleTableGenerator
         }
 
         table.Write();
+    }
+
+    public static void PrintWarning(string text)
+    {
+        Console.ForegroundColor = ConsoleColor.Red;
+        Console.WriteLine(text);
+        Console.ResetColor();
+    }
+
+    public static void PrintHint(string text)
+    {
+        Console.ForegroundColor = ConsoleColor.Green;
+        Console.WriteLine(text);
+        Console.ResetColor();
     }
 }
