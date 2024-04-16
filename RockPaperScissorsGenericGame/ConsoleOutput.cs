@@ -50,4 +50,11 @@ internal static class ConsoleOutput
         Console.WriteLine(text);
         Console.ResetColor();
     }
+
+    public static void PrintCodes(string text)
+    {
+        Console.ForegroundColor = ConsoleColor.Cyan;
+        Console.WriteLine(text);
+        Console.ResetColor();
+    }
 }
