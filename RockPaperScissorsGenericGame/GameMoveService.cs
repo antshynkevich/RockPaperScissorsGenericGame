@@ -18,6 +18,11 @@ internal class GameMoveService
         return _moves;
     }
 
+    public GameMove GetMoveByIndex(int index)
+    {
+        return _moves[index - 1];
+    }
+
     public void PrintAllMoves()
     {
         foreach (var gameMove in _moves)

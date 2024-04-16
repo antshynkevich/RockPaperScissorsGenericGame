@@ -7,15 +7,38 @@ internal static class Program
     {
         CheckArguments(ref args);
         var movesService = new GameMoveService(args);
-        // var moves = movesService.GetMoves();
+        var matrixService = new MovesMatrix(args.Length);
+
         Console.WriteLine("Available moves:");
         movesService.PrintAllMoves();
         Console.WriteLine("0 - exit\r\n? - help\r\n");
-        var userMove = GetUserMove(args.Length + 1);
-        var matrixService = new MovesMatrix(args.Length);
-        if (userMove == -1)
+        var userMoveValue = GetUserMove(args.Length + 1);
+        if (userMoveValue == -1)
         {
             ConsoleOutput.PrintHelp(args.Length, args, matrixService.Matrix);
+            return;
+        }
+
+        if (userMoveValue == 0)
+            return;
+        var computerMove = movesService.GetMoveByIndex(new Random().Next(1, args.Length + 1));
+        var userMove = movesService.GetMoveByIndex(userMoveValue);
+        Console.WriteLine($"Your move: {userMove.MoveName}\r\nComputer move: {computerMove.MoveName}");
+        var moveIndex = matrixService.MoveRelationIndex(userMove, computerMove);
+        switch (moveIndex)
+        {
+            case 0:
+                Console.WriteLine("You lose!");
+                break;
+            case 1:
+                Console.WriteLine("It's draw! OMG!");
+                break;
+            case 2:
+                Console.WriteLine("You WON! What a player!");
+                break;
+            default:
+                ConsoleOutput.PrintWarning("Something went wrong");
+                break;
         }
     }
 
