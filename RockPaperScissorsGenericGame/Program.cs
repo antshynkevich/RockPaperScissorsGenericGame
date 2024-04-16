@@ -1,5 +1,4 @@
-﻿
-namespace RockPaperScissorsGenericGame;
+﻿namespace RockPaperScissorsGenericGame;
 
 internal static class Program
 {
@@ -8,7 +7,11 @@ internal static class Program
         CheckArguments(ref args);
         var movesService = new GameMoveService(args);
         var matrixService = new MovesMatrix(args.Length);
+        var hmacService = new HmacCalculatorService();
 
+        var computerMove = movesService.GetMoveByIndex(new Random().Next(1, args.Length + 1));
+        hmacService.CalculateHmacForMessage(computerMove.MoveName);
+        ConsoleOutput.PrintCodes("HMAC: " + hmacService.GetHmacAsString());
         Console.WriteLine("Available moves:");
         movesService.PrintAllMoves();
         Console.WriteLine("0 - exit\r\n? - help\r\n");
@@ -19,9 +22,7 @@ internal static class Program
             return;
         }
 
-        if (userMoveValue == 0)
-            return;
-        var computerMove = movesService.GetMoveByIndex(new Random().Next(1, args.Length + 1));
+        if (userMoveValue == 0) return;
         var userMove = movesService.GetMoveByIndex(userMoveValue);
         Console.WriteLine($"Your move: {userMove.MoveName}\r\nComputer move: {computerMove.MoveName}");
         var moveIndex = matrixService.MoveRelationIndex(userMove, computerMove);
@@ -31,7 +32,7 @@ internal static class Program
                 Console.WriteLine("You lose!");
                 break;
             case 1:
-                Console.WriteLine("It's draw! OMG!");
+                Console.WriteLine("It's a draw! OMG!");
                 break;
             case 2:
                 Console.WriteLine("You WON! What a player!");
@@ -40,6 +41,8 @@ internal static class Program
                 ConsoleOutput.PrintWarning("Something went wrong");
                 break;
         }
+
+        ConsoleOutput.PrintCodes($"Secret key: {hmacService.GetSecretKeyAsString()}");
     }
 
     private static int GetUserMove(int maxValue)
