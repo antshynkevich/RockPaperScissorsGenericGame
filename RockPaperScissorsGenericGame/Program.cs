@@ -19,7 +19,7 @@ internal static class Program
             Console.WriteLine("Available moves:");
             movesService.PrintAllMoves();
             Console.WriteLine("* - take user arguments from the console\r\n? - help\r\n0 - exit\r\n");
-
+          
             var userMoveValue = InputValidation.GetUserMove(args.Length);
             if (userMoveValue == -1)
             {
