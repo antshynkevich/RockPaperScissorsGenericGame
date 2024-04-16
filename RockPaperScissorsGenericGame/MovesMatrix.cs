@@ -43,6 +43,11 @@ internal class MovesMatrix
         return matrix;
     }
 
+    public int MoveRelationIndex(GameMove userMove, GameMove computerMove)
+    {
+        return _matrix[computerMove.MoveIndex - 1, userMove.MoveIndex - 1];
+    }
+
     /// <summary>
     /// This method is for debugging purposes. It prints the object's matrix.
     /// </summary>

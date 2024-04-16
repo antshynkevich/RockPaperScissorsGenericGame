@@ -2,8 +2,8 @@
 
 internal class GameMove
 {
-    public string MoveName { get; set; }
-    public int MoveIndex { get; set; }
+    public string MoveName { get; }
+    public int MoveIndex { get; }
 
     public GameMove(string name, int index)
     {
