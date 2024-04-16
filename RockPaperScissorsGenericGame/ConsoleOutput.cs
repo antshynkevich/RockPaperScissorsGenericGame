@@ -37,7 +37,7 @@ internal static class ConsoleOutput
         table.Write();
     }
 
-    public static void PrintWarning(string text)
+    public static void PrintError(string text)
     {
         Console.ForegroundColor = ConsoleColor.Red;
         Console.WriteLine(text);
