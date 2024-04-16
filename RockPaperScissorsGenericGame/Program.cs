@@ -20,7 +20,7 @@ internal static class Program
             movesService.PrintAllMoves();
             Console.WriteLine("* - take user arguments from the console\r\n? - help\r\n0 - exit\r\n");
 
-            var userMoveValue = InputValidation.GetUserMove(args.Length + 1);
+            var userMoveValue = InputValidation.GetUserMove(args.Length);
             if (userMoveValue == -1)
             {
                 ConsoleOutput.PrintHelp(args.Length, args, matrixService.Matrix);
