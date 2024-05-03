@@ -1,4 +1,6 @@
-﻿namespace RockPaperScissorsGenericGame;
+﻿using static RockPaperScissorsGenericGame.MovesMatrix;
+
+namespace RockPaperScissorsGenericGame;
 
 internal static class Program
 {
@@ -8,7 +10,6 @@ internal static class Program
         {
             InputValidation.CheckArguments(ref args);
             var movesService = new GameMoveService(args);
-            var matrixService = new MovesMatrix(args.Length);
             var hmacService = new HmacCalculatorService();
 
             Console.WriteLine("\r\n–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––");
@@ -20,32 +21,34 @@ internal static class Program
             movesService.PrintAllMoves();
             Console.WriteLine("* - take user arguments from the console\r\n? - help\r\n0 - exit\r\n");
 
-            var userMoveValue = InputValidation.GetUserMove(args.Length + 1);
-            if (userMoveValue == -1)
+            var userMoveInput = InputValidation.GetUserMove(args.Length + 1);
+            if (userMoveInput.IsHelpCommand)
             {
+                var matrixService = new MovesMatrix(args.Length);
                 ConsoleOutput.PrintHelp(args.Length, args, matrixService.Matrix);
                 continue;
             }
 
-            if (userMoveValue == -2)
+            if (userMoveInput.IsRestartCommand)
             {
                 InputValidation.UserArgsInput(ref args);
                 continue;
             }
 
-            if (userMoveValue == 0) break;
-            var userMove = movesService.GetMoveByIndex(userMoveValue);
+            if (userMoveInput.IsExitCommand) break;
+
+            var userMove = movesService.GetMoveByIndex(userMoveInput.MoveNumber);
             Console.WriteLine($"Your move: {userMove.MoveName}\r\nComputer move: {computerMove.MoveName}");
-            var moveIndex = matrixService.MoveRelationIndex(userMove, computerMove);
+            var moveIndex = MovesMatrix.GetGameMoveRelationIndex(userMove, computerMove, args.Length);
             switch (moveIndex)
             {
-                case 0:
+                case GameMoveRelationships.Loss:
                     ConsoleOutput.PrintError("You lose!");
                     break;
-                case 1:
+                case GameMoveRelationships.Draw:
                     ConsoleOutput.PrintCodes("It's a draw! OMG!");
                     break;
-                case 2:
+                case GameMoveRelationships.Win:
                     ConsoleOutput.PrintHint("You WON! What a player!");
                     break;
                 default:
@@ -57,6 +60,6 @@ internal static class Program
             Console.WriteLine("–––––––––––––––––––––––––––Well played!––––––––––––––––––––––––––");
         }
 
-        ConsoleOutput.PrintHint("Good buy!");
+        ConsoleOutput.PrintHint("Goodbye!");
     }
 }

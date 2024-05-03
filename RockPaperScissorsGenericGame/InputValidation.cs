@@ -11,22 +11,25 @@ internal static class InputValidation
         ContainsRepeatingAndShort
     }
 
-    internal static int GetUserMove(int maxValue)
+    internal static UserMoveInput GetUserMove(int maxValue)
     {
         Console.Write("Enter your move: ");
+        var userMoveInput = new UserMoveInput();
         var input = Console.ReadLine();
         int number = 0;
-        var flag = input == "?" || input == "*";
-        if (flag || int.TryParse(input, out number))
+
+        if (input == "?" || input == "*" || input == "0" || int.TryParse(input, out number))
         {
-            if (input == "?") return -1;
-            if (input == "*") return -2;
-            if (number == 0) return 0;
-            if (number > 0 && number <= maxValue) return number;
+            userMoveInput.MoveNumber = number;
+            if (number > 0 && number <= maxValue) return userMoveInput;
+            if (input == "?") userMoveInput.IsHelpCommand = true;
+            if (input == "*") userMoveInput.IsRestartCommand = true;
+            if (input == "0") userMoveInput.IsExitCommand = true;
+            return userMoveInput;
         }
 
         ConsoleOutput.PrintError("Your input was incorrect. The input must be a number and cannot be an empty string.");
-        Console.WriteLine("Please, inter integer number or '?' sign to get a reference table with moves.");
+        Console.WriteLine("Please, enter integer number or '?' sign to get a reference table with moves.");
         ConsoleOutput.PrintHint("Available moves are 1 to " + maxValue);
         return GetUserMove(maxValue);
     }

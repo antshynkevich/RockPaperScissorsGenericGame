@@ -43,23 +43,17 @@ internal class MovesMatrix
         return matrix;
     }
 
-    public int MoveRelationIndex(GameMove userMove, GameMove computerMove)
+    public static GameMoveRelationships GetGameMoveRelationIndex(GameMove userMove, GameMove computerMove, int numberOfMoves)
     {
-        return _matrix[computerMove.MoveIndex - 1, userMove.MoveIndex - 1];
+        if (userMove.MoveIndex == computerMove.MoveIndex) return GameMoveRelationships.Draw;
+        return ((userMove.MoveIndex + numberOfMoves - computerMove.MoveIndex) % numberOfMoves > numberOfMoves / 2)
+            ? GameMoveRelationships.Loss : GameMoveRelationships.Win;
     }
 
-    /// <summary>
-    /// This method is for debugging purposes. It prints the object's matrix.
-    /// </summary>
-    public void PrintMatrix()
+    public enum GameMoveRelationships
     {
-        for (int i = 0; i < _matrix.GetLength(0); i++)
-        {
-            for (int j = 0; j < _matrix.GetLength(1); j++)
-            {
-                Console.Write(_matrix[i, j] + " ");
-            }
-            Console.WriteLine();
-        }
+        Draw,
+        Win,
+        Loss
     }
 }
